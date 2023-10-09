@@ -40,7 +40,7 @@ class ReviewController extends Controller
 
         $book->reviews()->create($data);
 
-        return redirect()->route('books.show', $book);
+        return redirect()->route('books.show', $book)->with('success', 'Review created successfully!');
     }
 
     /**
