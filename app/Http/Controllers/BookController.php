@@ -56,8 +56,8 @@ class BookController extends Controller
     {
         $cacheKey = 'book:' . $id . ':' . request()->input('page', '');
 
-        $book = Book::findorFail($id);
-        $book->setRelation('reviews', $book->reviews()->paginate(10));
+        $book = Book::withReviewsCount()->withAvgRating()->findorFail($id);
+        $book->setRelation('reviews', $book->reviews()->latest()->paginate(10));
 
         $book = cache()->remember($cacheKey, 3600, fn () => $book);
 
